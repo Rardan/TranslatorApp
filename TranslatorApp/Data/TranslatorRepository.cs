@@ -15,19 +15,47 @@ namespace TranslatorApp.Data
         {
             _translatorDbContext = translatorDbContext;
         }
-        public async Task<IEnumerable<ResultTranslation>> GetAllTranslationsAsync()
+
+        public async Task<IEnumerable<Query>> GetQueriesAsync()
         {
-            return await _translatorDbContext.ResultTranslations.ToListAsync();
+            return await _translatorDbContext.Queries.ToListAsync();
         }
 
-        public async Task<IEnumerable<ResultTranslation>> GetTranslationsGroupAsync(string type)
+        public SuccessResponse GetSuccessResponse(int queryId)
         {
-            return await _translatorDbContext.ResultTranslations.Where(r => r.Translation == type).ToListAsync();
+            return _translatorDbContext.SuccessResponses.Include(q => q.Query).FirstOrDefault(r => r.QueryId == queryId);
         }
 
-        public async Task AddTranslationAsync(ResultTranslation resultTranslation)
+        public ErrorResponse GetErrorResponse(int queryId)
         {
-            await _translatorDbContext.AddAsync(resultTranslation);
+            return _translatorDbContext.ErrorResponses.Include(q => q.Query).FirstOrDefault(r => r.QueryId == queryId);
+        }
+
+        public async Task AddResponseAsync(string call, SuccessResponse success = null, ErrorResponse error = null)
+        {
+            var query = new Query
+            {
+                Call = call,
+                Success = true
+            };
+            await _translatorDbContext.Queries.AddAsync(query);
+            await SaveChangesAsync();
+
+            if (success != null && error == null)
+            {
+                success.QueryId = query.Id;
+                await _translatorDbContext.SuccessResponses.AddAsync(success);
+                await SaveChangesAsync();
+            }
+
+            if (success == null && error != null)
+            {
+                query.Success = false;
+                _translatorDbContext.Queries.Update(query);
+                error.QueryId = query.Id;
+                await _translatorDbContext.ErrorResponses.AddAsync(error);
+                await SaveChangesAsync();
+            }
         }
 
         public async Task SaveChangesAsync()
