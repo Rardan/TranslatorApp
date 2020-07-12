@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TranslatorApp.Data;
+using TranslatorApp.Services;
 
 namespace TranslatorApp
 {
@@ -32,6 +33,8 @@ namespace TranslatorApp
                 });
 
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+
+            services.AddHttpClient<IApiHttpClientService, ApiHttpClientService>();
 
             services.AddControllersWithViews();
         }
