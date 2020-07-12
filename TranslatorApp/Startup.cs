@@ -31,6 +31,8 @@ namespace TranslatorApp
                     options.UseNpgsql(Configuration.GetConnectionString("TranslatorConnectionString"));
                 });
 
+            services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+
             services.AddControllersWithViews();
         }
 
