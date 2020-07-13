@@ -62,6 +62,7 @@ namespace TranslatorApp.Controllers
                     };
 
                     await _translatorRepository.AddResponseAsync(model.Text, model.Id, successModel, null);
+                    return RedirectToAction("Details", new { id = successModel.QueryId });
                 }
                 else
                 {
@@ -74,6 +75,7 @@ namespace TranslatorApp.Controllers
                     };
 
                     await _translatorRepository.AddResponseAsync(model.Text, model.Id, null, errorModel);
+                    return RedirectToAction("Details", new { id = errorModel.QueryId });
                 }
             }
 
@@ -81,28 +83,36 @@ namespace TranslatorApp.Controllers
         }
 
         // GET: Translator/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var result = _translatorRepository.GetSuccessResponse(id);
+            var result = await _translatorRepository.GetQueryAsync(id);
 
             if (result == null)
             {
-                var error = _translatorRepository.GetErrorResponse(id);
-
-                if (error == null)
-                {
-                    return NotFound();
-                }
-
-                return View(error);
+                return NotFound();
             }
 
-            return View(result);
+            if (result.Success)
+            {
+                return RedirectToAction("DetailsSuccess", new { result.Id });
+            }
+
+            return RedirectToAction("DetailError", new { result.Id });
+        }
+
+        public IActionResult DetailsSuccess(int? id)
+        {
+            return View(_translatorRepository.GetSuccessResponse(id));
+        }
+
+        public IActionResult DetailError(int? id)
+        {
+            return View(_translatorRepository.GetErrorResponse(id));
         }
     }
 }

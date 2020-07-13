@@ -1,0 +1,27 @@
+﻿@model ErrorResponse
+@{
+    ViewData["Title"] = "DetailError";
+}
+
+<h1>Error!</h1>
+
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Language</th>
+                <th>Code</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Query.Call</td>
+                <td>@Model.Query.Translation.Language</td>
+                <td>@Model.Code</td>
+                <td>@Model.Message</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

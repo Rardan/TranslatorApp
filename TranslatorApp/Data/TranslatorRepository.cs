@@ -21,6 +21,11 @@ namespace TranslatorApp.Data
             return await _translatorDbContext.Queries.Include(t => t.Translation).ToListAsync();
         }
 
+        public async Task<Query> GetQueryAsync(int? id)
+        {
+            return await _translatorDbContext.Queries.FirstOrDefaultAsync(q => q.Id == id);
+        }
+
         public SuccessResponse GetSuccessResponse(int? queryId)
         {
             return _translatorDbContext.SuccessResponses.Include(q => q.Query).FirstOrDefault(r => r.QueryId == queryId);
@@ -28,7 +33,7 @@ namespace TranslatorApp.Data
 
         public ErrorResponse GetErrorResponse(int? queryId)
         {
-            return _translatorDbContext.ErrorResponses.Include(q => q.Query).FirstOrDefault(r => r.QueryId == queryId);
+            return _translatorDbContext.ErrorResponses.Include(q => q.Query).ThenInclude(t => t.Translation).FirstOrDefault(r => r.QueryId == queryId);
         }
 
         public async Task AddResponseAsync(string call, int translatonId, SuccessResponse success = null, ErrorResponse error = null)

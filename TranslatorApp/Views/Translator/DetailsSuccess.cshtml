@@ -1,0 +1,25 @@
+﻿@model SuccessResponse
+@{
+    ViewData["Title"] = "DetailsSuccess";
+}
+
+<h1>Success!</h1>
+
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Language</th>
+                <th>Translation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Text</td>
+                <td>@Model.Translation</td>
+                <td>@Model.Translated</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
