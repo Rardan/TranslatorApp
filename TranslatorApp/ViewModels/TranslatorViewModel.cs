@@ -10,6 +10,7 @@ namespace TranslatorApp.ViewModels
     {
         [Required]
         public string Text { get; set; }
+        [Required]
         public int Id { get; set; }
     }
 }
