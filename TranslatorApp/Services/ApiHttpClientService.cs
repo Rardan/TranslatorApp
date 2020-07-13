@@ -15,9 +15,9 @@ namespace TranslatorApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<HttpResponseMessage> GetResponseAsync(string query)
+        public async Task<HttpResponseMessage> GetResponseAsync(string query, string language)
         {
-            string url = "https://api.funtranslations.com/translate/leetspeak.json?text=" + query;
+            string url = "https://api.funtranslations.com/translate/" + language + ".json?text=" + query;
 
             return await _httpClient.GetAsync(url);
         }

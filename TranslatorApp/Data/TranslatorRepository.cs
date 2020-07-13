@@ -18,25 +18,26 @@ namespace TranslatorApp.Data
 
         public async Task<IEnumerable<Query>> GetQueriesAsync()
         {
-            return await _translatorDbContext.Queries.ToListAsync();
+            return await _translatorDbContext.Queries.Include(t => t.Translation).ToListAsync();
         }
 
-        public SuccessResponse GetSuccessResponse(int queryId)
+        public SuccessResponse GetSuccessResponse(int? queryId)
         {
             return _translatorDbContext.SuccessResponses.Include(q => q.Query).FirstOrDefault(r => r.QueryId == queryId);
         }
 
-        public ErrorResponse GetErrorResponse(int queryId)
+        public ErrorResponse GetErrorResponse(int? queryId)
         {
             return _translatorDbContext.ErrorResponses.Include(q => q.Query).FirstOrDefault(r => r.QueryId == queryId);
         }
 
-        public async Task AddResponseAsync(string call, SuccessResponse success = null, ErrorResponse error = null)
+        public async Task AddResponseAsync(string call, int translatonId, SuccessResponse success = null, ErrorResponse error = null)
         {
             var query = new Query
             {
                 Call = call,
-                Success = true
+                Success = true,
+                TranslationId = translatonId
             };
             await _translatorDbContext.Queries.AddAsync(query);
             await SaveChangesAsync();

@@ -10,8 +10,10 @@ namespace TranslatorApp.Models
         public int Id { get; set; }
         public string Call { get; set; }
         public bool Success { get; set; }
+        public int TranslationId { get; set; }
 
         public SuccessResponse SuccessResponse { get; set; }
         public ErrorResponse ErrorResponse { get; set; }
+        public Translation Translation { get; set; }
     }
 }

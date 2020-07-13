@@ -16,6 +16,7 @@ namespace TranslatorApp.Data
         public DbSet<Query> Queries { get; set; }
         public DbSet<SuccessResponse> SuccessResponses { get; set; }
         public DbSet<ErrorResponse> ErrorResponses { get; set; }
+        public DbSet<Translation> Translations { get; set; }
 
     }
 }

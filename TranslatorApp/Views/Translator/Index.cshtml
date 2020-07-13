@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Query>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1></h1>
+
+<div>
+    <p>
+        <a asp-action="Translate">Translate your text!</a>
+    </p>
+</div>
+
+<div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Call
+                </th>
+                <th>
+                    Language
+                </th>
+                <th>
+                    Result
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.Call
+                </td>
+                <th>@item.Translation.Language</th>
+                
+                @if (item.Success)
+                {
+                    <td>Success</td>
+                }
+                else
+                {
+                    <td>Error</td>
+                }
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

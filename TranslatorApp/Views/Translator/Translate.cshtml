@@ -1,0 +1,25 @@
+﻿@model TranslatorViewModel
+@{
+    ViewData["Title"] = "Translate";
+}
+
+<h1>Translate your text</h1>
+
+<div>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Text">Text to translate</label>
+            <textarea rows="5" asp-for="Text" class="form-control"></textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Id">Choose translation</label>
+            <select asp-for="Id" class="form-control" asp-items="ViewBag.translations"></select>
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-sm">Translate</button>
+        </div>
+    </form>
+</div>

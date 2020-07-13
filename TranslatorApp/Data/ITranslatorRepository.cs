@@ -6,10 +6,10 @@ namespace TranslatorApp.Data
 {
     public interface ITranslatorRepository
     {
-        Task AddResponseAsync(string call, SuccessResponse success = null, ErrorResponse error = null);
-        ErrorResponse GetErrorResponse(int queryId);
+        Task AddResponseAsync(string call, int translationId, SuccessResponse success = null, ErrorResponse error = null);
+        ErrorResponse GetErrorResponse(int? queryId);
         Task<IEnumerable<Query>> GetQueriesAsync();
-        SuccessResponse GetSuccessResponse(int queryId);
+        SuccessResponse GetSuccessResponse(int? queryId);
         Task SaveChangesAsync();
     }
 }

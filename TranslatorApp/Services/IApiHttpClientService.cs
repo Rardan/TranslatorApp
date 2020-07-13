@@ -5,6 +5,6 @@ namespace TranslatorApp.Services
 {
     public interface IApiHttpClientService
     {
-        Task<HttpResponseMessage> GetResponseAsync(string query);
+        Task<HttpResponseMessage> GetResponseAsync(string query, string language);
     }
 }

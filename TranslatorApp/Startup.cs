@@ -33,6 +33,7 @@ namespace TranslatorApp
                 });
 
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+            services.AddScoped<ITranslationRepository, TranslationRepository>();
 
             services.AddHttpClient<IApiHttpClientService, ApiHttpClientService>();
 
