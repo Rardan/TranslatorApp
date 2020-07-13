@@ -11,19 +11,17 @@
     </p>
 </div>
 
+
 <div>
-    <table class="table table-bordered table-striped">
+    <hr />
+    <input type="search" id="searchtab" placeholder="Search" />
+    <p></p>
+    <table class="table table-bordered table-striped" id="table1">
         <thead>
             <tr>
-                <th>
-                    Call
-                </th>
-                <th>
-                    Language
-                </th>
-                <th>
-                    Result
-                </th>
+                <th>Call</th>
+                <th>Language</th>
+                <th>Result</th>
                 <th></th>
             </tr>
         </thead>
@@ -54,3 +52,25 @@
         </tbody>
     </table>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+        $("#searchtab").on("keyup", function ()
+        {
+            var datasearch = $(this).val().toLowerCase();
+            $("#table1 tr").each(function ()
+            {
+                var stringdata = $(this).text().toLowerCase();
+                if (stringdata.indexOf(datasearch) == -1) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>

@@ -105,11 +105,13 @@ namespace TranslatorApp.Controllers
             return RedirectToAction("DetailError", new { result.Id });
         }
 
+        // GET: Translator/DetailsSuccess/5
         public IActionResult DetailsSuccess(int? id)
         {
             return View(_translatorRepository.GetSuccessResponse(id));
         }
 
+        // GET: Translator/DetailsError/5
         public IActionResult DetailError(int? id)
         {
             return View(_translatorRepository.GetErrorResponse(id));
